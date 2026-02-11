@@ -1,0 +1,17 @@
+node_modules
+dist
+build
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+*.log
+npm-debug.log*
+.nyc_output
+coverage
+.vscode
+.idea
+*.tsbuildinfo
+media
+src/generated

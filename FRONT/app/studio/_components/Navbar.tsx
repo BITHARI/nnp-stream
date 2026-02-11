@@ -1,0 +1,96 @@
+'use client'
+
+import Link from "next/link";
+import { ThemeToggle } from "@/components/ui/themeToggle";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useAuth } from "@/providers/AuthProvider";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, AnimatedMenuIcon } from "@/components/ui/navigation-menu";
+import NnpLogo from "@/components/icons/NnpLogo";
+import NnpMinifiedLogo from "@/components/icons/NnpMinifiedLogo";
+import SearchBar from "@/components/search/SearchBar";
+import HeartIcon from "@/components/icons/HeartIcon";
+import { usePathname } from "next/navigation";
+import LiveIcon from "@/components/icons/LiveIcon";
+import { Heart, User2 } from "lucide-react";
+import UserDropdown from "@/app/(public)/_components/UserDropdown";
+
+const navigationItems = [
+    // { name: "Live", href: "/live", icon: <LiveIcon /> },
+    { name: "Favoris", href: "/favorites", icon: <Heart /> }
+]
+
+export default function Navbar() {
+
+    const { user } = useAuth()
+    const pathname = usePathname()
+
+    return <header className="bg-linear-to-b from-nnp-primary to-transparent pb-4">
+        <div className="container flex min-h-16 items-center justify-between gap-4 mx-auto px-4 md:px-6 lg:px-8">
+            <div className="hidden lg:flex items-center -ml-1.5">
+                <Link href="/" className="hover:opacity-9 transition-opacity">
+                    <NnpLogo />
+                </Link>
+            </div>
+            <Link href="/" className="lg:hidden relative hover:opacity-90 transition-opacity">
+                <NnpMinifiedLogo />
+            </Link>
+            <nav className="flex items-center gap-2">
+                <div className="hidden lg:flex items-center gap-2">
+                    <Link
+                        href="/favorites"
+                        data-active={pathname.toLowerCase() === "/favorites"}
+                        className="group flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 transition-all"
+                    >
+                        <HeartIcon className="stroke-nnp-muted group-data-[active=true]:stroke-nnp-highlight transition-all size-4" />
+                        <span className="text-nnp-muted group-data-[active=true]:text-nnp-highlight group-data-[active=true]:font-bold transition-all">
+                            {"Favoris"}
+                        </span>
+                    </Link>
+                </div>
+                <div className={`flex items-center space-x-4 ${!user && "max-md:hidden"}`}>
+                    {user
+                        ? <UserDropdown user={user} />
+                        : <div className="hidden md:block">
+                            <Link href="/login" className={buttonVariants({ variant: "outline" })}><User2 className="size-4" /></Link>
+                        </div>
+                    }
+                    {/*  <div className="hidden md:block"><ThemeToggle /></div> */}
+                </div>
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <Button
+                            className="group size-8 lg:hidden"
+                            variant="ghost"
+                            size="icon"
+                        >
+                            <AnimatedMenuIcon />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent align="end" className="w-36 p-1 md:hidden">
+                        <NavigationMenu className="max-w-none *:w-full">
+                            <NavigationMenuList className="flex-col items-start gap-0 md:gap-2 space-y-1">
+                                {navigationItems.map((link, index) => {
+                                    return <NavigationMenuItem key={index} className="w-full">
+                                        <NavigationMenuLink href={link.href} className="py-1.5">
+                                            <div className="flex items-center justify-between gap-2">
+                                                <span>{link.name}</span>
+                                                {link.icon}
+                                            </div>
+                                        </NavigationMenuLink>
+                                    </NavigationMenuItem>
+                                })}
+                                {!user && <NavigationMenuItem className="w-full">
+                                    <Link href="/login" className={buttonVariants({ className: 'w-full' })}>Se connecter</Link>
+                                </NavigationMenuItem>}
+                                {/* <NavigationMenuItem className="w-full">
+                                    <ThemeToggle label="Thème" />
+                                </NavigationMenuItem> */}
+                            </NavigationMenuList>
+                        </NavigationMenu>
+                    </PopoverContent>
+                </Popover>
+            </nav>
+        </div>
+    </header>
+}

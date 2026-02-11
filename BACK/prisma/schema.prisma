@@ -1,0 +1,180 @@
+generator client {
+    provider = "prisma-client"
+    output   = "../src/generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+    VIEWER
+    ADMIN
+    SUPERADMIN
+}
+
+enum NoteType {
+    LIKE
+    DISLIKE
+}
+
+model User {
+    id            String     @id @default(uuid())
+    email         String
+    password      String
+    name          String
+    emailVerified Boolean    @default(false)
+    isActive      Boolean    @default(true)
+    userRole      UserRole   @default(VIEWER)
+    image         String?
+    created_at    DateTime   @default(now())
+    updated_at    DateTime   @updatedAt
+    sessions      Session[]
+    comments      Comment[]
+    favorites     Favorite[]
+    videos        Video[]    @relation("VideoAuthor")
+    notes         Note[]
+    noteQoEs      NoteQoE[]
+
+    @@unique([email])
+    @@map("users")
+}
+
+model Session {
+    id         String   @id @default(uuid())
+    user_id    String
+    token      String   @unique
+    expires_at DateTime
+    hasExpired Boolean  @default(false)
+    created_at DateTime @default(now())
+    user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+    @@index([user_id])
+    @@index([token])
+    @@map("sessions")
+}
+
+model Verification {
+    id         String   @id @default(uuid())
+    identifier String
+    value      String
+    expiresAt  DateTime
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    @@unique([identifier, value])
+    @@map("verification")
+}
+
+model Category {
+    id         String   @id @default(uuid())
+    type       String   @unique
+    created_at DateTime @default(now())
+    videos     Video[]
+
+    @@map("categories")
+}
+
+model Series {
+    id          Int      @id @default(autoincrement())
+    name        String
+    description String   @db.Text
+    cover_url   String
+    slug        String   @unique
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt
+
+    episodes Video[]
+
+    @@map("series")
+}
+
+model Video {
+    id           String     @id @default(uuid())
+    title        String
+    description  String     @db.Text
+    cover_url    String
+    type         String?
+    duration     String
+    slug         String     @unique
+    mux_asset_id String     @unique
+    playback_id  String     @unique
+    likes        Int        @default(0)
+    views        Int        @default(0)
+    is_promoted  Boolean    @default(false)
+    created_at   DateTime   @default(now())
+    updated_at   DateTime   @updatedAt
+    author_id    String?
+    author       User?      @relation("VideoAuthor", fields: [author_id], references: [id], onDelete: SetNull)
+    series_id    Int?
+    series       Series?    @relation(fields: [series_id], references: [id], onDelete: SetNull)
+    category_id  String
+    category     Category   @relation(fields: [category_id], references: [id])
+    comments     Comment[]
+    notes        Note[]
+    favorites    Favorite[]
+
+    @@index([slug])
+    @@index([mux_asset_id])
+    @@index([category_id])
+    @@index([series_id])
+    @@index([author_id])
+    @@map("videos")
+}
+
+model Comment {
+    id         String   @id @default(uuid())
+    content    String   @db.Text
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    video_id   String
+    video      Video    @relation(fields: [video_id], references: [id], onDelete: Cascade)
+    author_id  String
+    author     User     @relation(fields: [author_id], references: [id], onDelete: Cascade)
+
+    @@index([video_id])
+    @@index([author_id])
+    @@map("comments")
+}
+
+model Favorite {
+    id         String   @id @default(uuid())
+    created_at DateTime @default(now())
+    video_id   String
+    video      Video    @relation(fields: [video_id], references: [id], onDelete: Cascade)
+    user_id    String
+    user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+    @@unique([user_id, video_id])
+    @@index([user_id])
+    @@index([video_id])
+    @@map("favorites")
+}
+
+model Note {
+    id         String   @id @default(uuid())
+    type       NoteType @default(LIKE)
+    video_id   String
+    video      Video    @relation(fields: [video_id], references: [id], onDelete: Cascade)
+    user_id    String
+    user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    created_at DateTime @default(now())
+
+    @@unique([user_id, video_id])
+    @@index([user_id])
+    @@index([video_id])
+    @@map("notes")
+}
+
+model NoteQoE {
+    id         String   @id @default(uuid())
+    comment    String?
+    note       Int
+    user_id    String
+    user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    created_at DateTime @default(now())
+
+    @@index([user_id])
+    @@map("notes_qoe")
+}
