@@ -9,7 +9,7 @@ import routes from "./routes/routes.js";
 import { handleMuxWebhook } from "./lib/muxWebhook.js";
 
 const app = express();
-const port = process.env.PORT
+const port = process.env.SERVER_PORT
 
 const allowedOrigins = process.env.ALLOWED_ORIGIN?.split(',') || [];
 

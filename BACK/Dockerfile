@@ -9,7 +9,6 @@ RUN npm ci
 
 # ---- Stage 2: Build ----
 FROM node:22-alpine AS build
-
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
@@ -50,5 +49,4 @@ USER appuser
 
 EXPOSE 8000
 
-CMD ["node", "dist/index.js"]
-# CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]
+CMD ["sh", "-c", "npx prisma db push && node dist/index.js"]

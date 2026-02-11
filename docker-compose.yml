@@ -22,21 +22,51 @@ services:
   api:
     container_name: nnp-stream-api
     build:
-      context: .
+      context: ./BACK
       dockerfile: Dockerfile
     restart: unless-stopped
     env_file:
       - .env
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DB}:5432/${POSTGRES_DB}?schema=public
-    # expose:
-    # - "${PORT}"
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
     ports:
-      - "${PORT}:${PORT}"
+      - "${SERVER_PORT}:${SERVER_PORT}"
     volumes:
       - media_data:/app/media
     depends_on:
       db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget --spider -q http://localhost:${SERVER_PORT} || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nnp-stream-network
+
+  front:
+    container_name: nnp-stream-front
+    build:
+      context: ./FRONT
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:${CLIENT_PORT} || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      api:
         condition: service_healthy
     networks:
       - nnp-stream-network
