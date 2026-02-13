@@ -15,7 +15,7 @@ import LiveIcon from "@/components/icons/LiveIcon";
 import { Heart, User2 } from "lucide-react";
 
 const navigationItems = [
-    { name: "Studio", href: "/studio", icon: <LiveIcon /> },
+    { name: "Studio", href: `${process.env.NEXT_PUBLIC_ADMIN_URL}?t=${localStorage.getItem("nnp-stream-token")}`, target: "_blank", icon: <LiveIcon /> },
     { name: "Favoris", href: "/favorites", icon: <Heart /> }
 ]
 
@@ -81,7 +81,7 @@ export default function Navbar() {
                             <NavigationMenuList className="flex-col items-start gap-0 md:gap-2 space-y-1">
                                 {navigationItems.map((link, index) => {
                                     return <NavigationMenuItem key={index} className="w-full">
-                                        <NavigationMenuLink href={link.href} className="py-1.5">
+                                        <NavigationMenuLink href={link.href} target={link.target} className="py-1.5">
                                             <div className="flex items-center justify-between gap-2">
                                                 <span>{link.name}</span>
                                                 {link.icon}

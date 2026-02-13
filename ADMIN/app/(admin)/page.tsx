@@ -3,53 +3,21 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue
-} from "@/components/ui/select";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getVideos, deleteVideo } from "@/services/video";
 import Link from "next/link";
 import Image from "next/image";
-import {
-    Plus,
-    Search,
-    MoreVertical,
-    Edit,
-    Trash2,
-    Eye,
-    Clock,
-    Heart,
-    Video as VideoIcon
-} from "lucide-react";
+import { Plus, Search, MoreVertical, Heart, Edit, Trash2, Eye, Video as VideoIcon, Clock } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { showError } from "@/lib/utils";
 import { Video } from "@/services/types";
-import { getCategories } from "@/services/series";
+import { getCategories } from "@/services/categories";
+import DeleteVideoDialog from "./_components/DeleteVideoDialog";
 
 export default function VideosListPage() {
     const [page, setPage] = useState(1)
@@ -333,28 +301,12 @@ export default function VideosListPage() {
                     )}
                 </>
             )}
-
-            {/* Delete Confirmation Dialog */}
-            <AlertDialog open={!!videoToDelete} onOpenChange={() => setVideoToDelete(null)}>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            Cette action est irréversible. La vidéo "{videoToDelete?.title}" sera
-                            définitivement supprimée de la base de données et de Mux.
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Annuler</AlertDialogCancel>
-                        <AlertDialogAction
-                            onClick={handleDelete}
-                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                        >
-                            {deleteMutation.isPending ? "Suppression..." : "Supprimer"}
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
+            <DeleteVideoDialog
+                videoToDelete={videoToDelete}
+                setVideoToDelete={setVideoToDelete}
+                handleDelete={handleDelete}
+                isPending={deleteMutation.isPending}
+            />
         </div>
     )
 }

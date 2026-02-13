@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import VideoCard from "@/components/cards/VideoCard";
 import { useRouter } from "next/navigation";
-import { getSeries } from "@/services/series";
+import { getSeries } from "@/services/categories";
 import VideoCarousel from "./VideoCarousel";
 
 export default function SeriesGrid({ className }: { className?: string }) {

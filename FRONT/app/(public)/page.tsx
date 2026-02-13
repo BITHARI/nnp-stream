@@ -2,31 +2,24 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import VideoFilter from "./_components/VideoFilter";
-import { getCategories } from "@/services/series";
+import { getCategories } from "@/services/categories";
 import { getVideos } from "@/services/video";
 import HeroVideoCarousel from "./_components/HeroVideoCarousel";
 import VideoGrid from "./_components/VideosGrid";
-import SeriesGrid from "./_components/SeriesGrid";
+import VideoFilter from "./_components/VideoFilter";
 
-
-
-export default function Home() {
+export default function HomePage() {
     const [selectedFilter, setSelectedFilter] = useState<string>("all");
     const { data: categories } = useQuery({
         queryKey: ["videoTypes"],
         queryFn: getCategories,
     });
-
     const { data, isLoading } = useQuery({
         queryKey: ["promotedVideos"],
         queryFn: () => getVideos(),
     });
-
     return <>
-
         <HeroVideoCarousel data={data?.videos || []} isLoading={isLoading} />
-
         <div className="space-y-4 container-2xl px-4 md:px-8 lg:px-12">
             <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
@@ -53,12 +46,6 @@ export default function Home() {
                 key={selectedFilter}
                 categoryName={selectedFilter}
             />
-        </div>
-
-        {/* Series */}
-        <div className="space-y-0 container-2xl px-4 md:px-8 lg:px-12 my-10">
-            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">Séries</h2>
-            <SeriesGrid />
         </div>
     </>
 }

@@ -2,6 +2,7 @@ import express from "express";
 import helmet from "helmet";
 import cors from 'cors';
 import morgan from "morgan";
+import path from "path";
 import loggerConfig from "./middleware/logger.js";
 
 import authRoutes from "./routes/auth.js";
@@ -22,7 +23,7 @@ app.use(cors({
 loggerConfig();
 app.use(morgan('[:date[iso]] :colored-method :colored-url :colored-status :response-time ms - :res[content-length]'))
 app.use(express.json());
-
+app.use('/media', express.static(path.join(process.cwd(), 'media')));
 app.post('/api/webhooks/mux',
     express.raw({ type: 'application/json' }),
     handleMuxWebhook

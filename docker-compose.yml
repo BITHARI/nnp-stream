@@ -1,4 +1,5 @@
 services:
+  # ============== BASE DE DONNÉES ==============
   db:
     container_name: nnp-stream-db
     image: postgres:16-alpine
@@ -19,8 +20,9 @@ services:
     networks:
       - nnp-stream-network
 
-  api:
-    container_name: nnp-stream-api
+  # ============== API BACKEND (2 instances pour load balancing) ==============
+  api-1:
+    container_name: nnp-stream-api-1
     build:
       context: ./BACK
       dockerfile: Dockerfile
@@ -29,8 +31,7 @@ services:
       - .env
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
-    ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
+      INSTANCE_ID: "api-1"
     volumes:
       - media_data:/app/media
     depends_on:
@@ -48,6 +49,35 @@ services:
     networks:
       - nnp-stream-network
 
+  api-2:
+    container_name: nnp-stream-api-2
+    build:
+      context: ./BACK
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+      INSTANCE_ID: "api-2"
+    volumes:
+      - media_data:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget --spider -q http://localhost:${SERVER_PORT} || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nnp-stream-network
+
+  # ============== FRONTEND PUBLIC ==============
   front:
     container_name: nnp-stream-front
     build:
@@ -58,16 +88,68 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    ports:
-      - "${CLIENT_PORT}:${CLIENT_PORT}"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:${CLIENT_PORT} || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
     depends_on:
-      api:
+      api-1:
         condition: service_healthy
+      api-2:
+        condition: service_healthy
+    networks:
+      - nnp-stream-network
+
+  # ============== FRONTEND ADMIN ==============
+  admin:
+    container_name: nnp-stream-admin
+    build:
+      context: ./ADMIN
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+    restart: unless-stopped
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:${CLIENT_PORT} || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      api-1:
+        condition: service_healthy
+      api-2:
+        condition: service_healthy
+    networks:
+      - nnp-stream-network
+
+  # ============== NGINX REVERSE PROXY + LOAD BALANCER ==============
+  nginx:
+    container_name: nnp-stream-nginx
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      front:
+        condition: service_healthy
+      admin:
+        condition: service_healthy
+      api-1:
+        condition: service_healthy
+      api-2:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     networks:
       - nnp-stream-network
 

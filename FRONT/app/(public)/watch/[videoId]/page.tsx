@@ -16,7 +16,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import AnimatedCounter from "@/components/ui/animated-counter";
 import { toast } from "sonner";
 import { addFavorite, checkFavorite, getRelatedVideos, getVideoBySlug, removeFavorite } from "@/services/video";
-import { getCategories } from "@/services/series";
+import { getCategories } from "@/services/categories";
 import VideoHCard from "@/components/cards/VideoHCard";
 
 const MuxPlayer = dynamic(() => import("@mux/mux-player-react"), {

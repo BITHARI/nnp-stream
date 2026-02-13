@@ -1,0 +1,283 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import 'tailwind-scrollbar-hide/v4';
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Needs to handle scrollbar-hide className below */
+@layer utilities {
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.video-card-mobile {
+    @apply w-[480px] sm:w-[320px] max-sm:w-[200px] shrink-0 aspect-video;
+}
+
+.mobile-scroll-container {
+    @apply flex overflow-x-auto gap-[10px] max-md:gap-[8px] scrollbar-hide pb-1 lg:pb-4 px-4 -mx-4 max-md:px-3 max-md:-mx-3;
+}
+
+.home mux-player {
+    /* Hide all controls at once */
+    --controls: none;
+
+    /* Hide the error dialog */
+    --dialog: none;
+
+    /* Hide the loading indicator */
+    --loading-indicator: none;
+
+    /* Target all sections by excluding the section prefix */
+    --play-button: none;
+    --live-button: none;
+    --seek-backward-button: none;
+    --seek-forward-button: none;
+    --mute-button: none;
+    --captions-button: none;
+    --airplay-button: none;
+    --pip-button: none;
+    --fullscreen-button: none;
+    --cast-button: none;
+    --playback-rate-button: none;
+    --volume-range: none;
+    --time-range: none;
+    --time-display: none;
+    --duration-display: none;
+    --rendition-menu-button: none;
+
+    --media-object-fit: cover;
+    --media-object-position: center;
+
+    /* Target a specific section by prefixing the CSS var with (top|center|bottom) */
+    --center-controls: none;
+    --bottom-play-button: none;
+}
+
+:root {
+    /* Your existing CSS variables */
+    --background: oklch(1.0000 0 0);
+    --foreground: oklch(0.2035 0.0139 285.1021);
+    --card: oklch(1.0000 0 0);
+    --card-foreground: oklch(0.2035 0.0139 285.1021);
+    --popover: oklch(1.0000 0 0);
+    --popover-foreground: oklch(0.2035 0.0139 285.1021);
+    --primary: oklch(0.7442 0.1812 56.4585);
+    --primary-foreground: oklch(0.9851 0 0);
+    --secondary: oklch(0.9674 0.0013 286.3752);
+    --secondary-foreground: oklch(0.2069 0.0098 285.5081);
+    --muted: oklch(0.9674 0.0013 286.3752);
+    --muted-foreground: oklch(0.5462 0.0200 285.7177);
+    --accent: oklch(0.9674 0.0013 286.3752);
+    --accent-foreground: oklch(0.2069 0.0098 285.5081);
+    --destructive: oklch(0.6496 0.2362 26.9032);
+    --destructive-foreground: oklch(0.9851 0 0);
+    --border: oklch(0.9173 0.0067 286.2663);
+    --input: oklch(0.9173 0.0067 286.2663);
+    --ring: oklch(0.7442 0.1812 56.4585);
+    --chart-1: oklch(0.7442 0.1812 56.4585);
+    --chart-2: oklch(0.7039 0.1665 241.9331);
+    --chart-3: oklch(0.7685 0.2472 142.6929);
+    --chart-4: oklch(0.5602 0.2765 308.7773);
+    --chart-5: oklch(0.8016 0.1705 73.2670);
+    --sidebar: oklch(0.2035 0.0139 285.1021);
+    --sidebar-foreground: oklch(0.9851 0 0);
+    --sidebar-primary: oklch(0.7442 0.1812 56.4585);
+    --sidebar-primary-foreground: oklch(0.9851 0 0);
+    --sidebar-accent: oklch(0.2069 0.0098 285.5081);
+    --sidebar-accent-foreground: oklch(0.9851 0 0);
+    --sidebar-border: oklch(0.2069 0.0098 285.5081);
+    --sidebar-ring: oklch(0.7442 0.1812 56.4585);
+
+    /* Add your custom NNP colors */
+    --nnp-primary: #14161A;
+    --nnp-highlight: #DD8300;
+    --nnp-muted: #828282;
+    --nnp-gradient: #7591A3;
+    --nnp-background: #23292F;
+    --nnp-light-gray: #BBBBBB;
+    --nnp-primary-dark: #20242A;
+
+    --font-sans: Inter, Figtree, sans-serif;
+    --font-serif: serif;
+    --font-mono: monospace;
+    --radius: 0.875rem;
+    --shadow-x: 0px;
+    --shadow-y: 4px;
+    --shadow-blur: 10px;
+    --shadow-spread: 0.5px;
+    --shadow-opacity: 0.1;
+    --shadow-color: 0 0 0;
+    --shadow-2xs: 0px 4px 10px 0.5px hsl(0 0 0 / 0.05);
+    --shadow-xs: 0px 4px 10px 0.5px hsl(0 0 0 / 0.05);
+    --shadow-sm: 0px 4px 10px 0.5px hsl(0 0 0 / 0.10), 0px 1px 2px -0.5px hsl(0 0 0 / 0.10);
+    --shadow: 0px 4px 10px 0.5px hsl(0 0 0 / 0.10), 0px 1px 2px -0.5px hsl(0 0 0 / 0.10);
+    --shadow-md: 0px 4px 10px 0.5px hsl(0 0 0 / 0.10), 0px 2px 4px -0.5px hsl(0 0 0 / 0.10);
+    --shadow-lg: 0px 4px 10px 0.5px hsl(0 0 0 / 0.10), 0px 4px 6px -0.5px hsl(0 0 0 / 0.10);
+    --shadow-xl: 0px 4px 10px 0.5px hsl(0 0 0 / 0.10), 0px 8px 10px -0.5px hsl(0 0 0 / 0.10);
+    --shadow-2xl: 0px 4px 10px 0.5px hsl(0 0 0 / 0.25);
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+
+    /* Custom spacing */
+    --spacing-44-5: 180px;
+}
+
+.dark {
+    --background: oklch(0.1876 0.0040 286.0064);
+    --foreground: oklch(0.9851 0 0);
+    --card: oklch(0.1785 0.0041 285.9807);
+    --card-foreground: oklch(0.9851 0 0);
+    --popover: oklch(0.2035 0.0139 285.1021);
+    --popover-foreground: oklch(0.9851 0 0);
+    --primary: oklch(0.6913 0.1563 64.0440);
+    --primary-foreground: oklch(0.9851 0 0);
+    --secondary: oklch(0.3063 0.0053 286.0813);
+    --secondary-foreground: oklch(0.9851 0 0);
+    --muted: oklch(0.2707 0.0092 285.7705);
+    --muted-foreground: oklch(0.7066 0.0188 285.9101);
+    --accent: oklch(0.2707 0.0092 285.7705);
+    --accent-foreground: oklch(0.9851 0 0);
+    --destructive: oklch(0.4205 0.1668 28.5048);
+    --destructive-foreground: oklch(0.9851 0 0);
+    --border: oklch(0.2354 0.0019 286.2536);
+    --input: oklch(0.2707 0.0092 285.7705);
+    --ring: oklch(0.7442 0.1812 56.4585);
+    --chart-1: oklch(0.7442 0.1812 56.4585);
+    --chart-2: oklch(0.7039 0.1665 241.9331);
+    --chart-3: oklch(0.7685 0.2472 142.6929);
+    --chart-4: oklch(0.5602 0.2765 308.7773);
+    --chart-5: oklch(0.8016 0.1705 73.2670);
+    --sidebar: oklch(0.2035 0.0139 285.1021);
+    --sidebar-foreground: oklch(0.9851 0 0);
+    --sidebar-primary: oklch(0.7442 0.1812 56.4585);
+    --sidebar-primary-foreground: oklch(0.9851 0 0);
+    --sidebar-accent: oklch(0.2707 0.0092 285.7705);
+    --sidebar-accent-foreground: oklch(0.9851 0 0);
+    --sidebar-border: oklch(0.2707 0.0092 285.7705);
+    --sidebar-ring: oklch(0.7442 0.1812 56.4585);
+    --font-sans: Inter, Figtree, sans-serif;
+    --font-serif: serif;
+    --font-mono: monospace;
+    --radius: 0.875rem;
+    --shadow-x: 0px;
+    --shadow-y: 4px;
+    --shadow-blur: 10px;
+    --shadow-spread: 0.5px;
+    --shadow-opacity: 0.1;
+    --shadow-color: 0 0 0;
+    --shadow-2xs: 0px 4px 10px 0.5px hsl(0 0 0 / 0.05);
+    --shadow-xs: 0px 4px 10px 0.5px hsl(0 0 0 / 0.05);
+    --shadow-sm: 0px 4px 10px 0.5px hsl(0 0 0 / 0.10), 0px 1px 2px -0.5px hsl(0 0 0 / 0.10);
+    --shadow: 0px 4px 10px 0.5px hsl(0 0 0 / 0.10), 0px 1px 2px -0.5px hsl(0 0 0 / 0.10);
+    --shadow-md: 0px 4px 10px 0.5px hsl(0 0 0 / 0.10), 0px 2px 4px -0.5px hsl(0 0 0 / 0.10);
+    --shadow-lg: 0px 4px 10px 0.5px hsl(0 0 0 / 0.10), 0px 4px 6px -0.5px hsl(0 0 0 / 0.10);
+    --shadow-xl: 0px 4px 10px 0.5px hsl(0 0 0 / 0.10), 0px 8px 10px -0.5px hsl(0 0 0 / 0.10);
+    --shadow-2xl: 0px 4px 10px 0.5px hsl(0 0 0 / 0.25);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+
+    /* Add your custom NNP colors to theme */
+    --color-nnp-primary: var(--nnp-primary);
+    --color-nnp-highlight: var(--nnp-highlight);
+    --color-nnp-muted: var(--nnp-muted);
+    --color-nnp-gradient: var(--nnp-gradient);
+    --color-nnp-background: var(--nnp-background);
+    --color-nnp-light-gray: var(--nnp-light-gray);
+    --color-nnp-primary-dark: var(--nnp-primary-dark);
+
+    --font-sans: var(--font-sans);
+    --font-mono: var(--font-mono);
+    --font-serif: var(--font-serif);
+
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+
+    --shadow-2xs: var(--shadow-2xs);
+    --shadow-xs: var(--shadow-xs);
+    --shadow-sm: var(--shadow-sm);
+    --shadow: var(--shadow);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
+    --shadow-2xl: var(--shadow-2xl);
+
+    /* Custom spacing */
+    --spacing-44\.5: var(--spacing-44-5);
+
+    /* Custom animations */
+    --animate-zoom-in: zoom-in 1s ease-out;
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+@keyframes zoom-in {
+    0% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Scrollbar hide utility */
+@layer utilities {
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    .transition-width {
+        transition-property: width;
+    }
+}
