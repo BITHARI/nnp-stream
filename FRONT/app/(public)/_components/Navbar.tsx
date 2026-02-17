@@ -13,13 +13,22 @@ import HeartIcon from "@/components/icons/HeartIcon";
 import { usePathname } from "next/navigation";
 import LiveIcon from "@/components/icons/LiveIcon";
 import { Heart, User2 } from "lucide-react";
-
-const navigationItems = [
-    { name: "Studio", href: `${process.env.NEXT_PUBLIC_ADMIN_URL}?t=${localStorage.getItem("nnp-stream-token")}`, target: "_blank", icon: <LiveIcon /> },
-    { name: "Favoris", href: "/favorites", icon: <Heart /> }
-]
+import { useMemo, useEffect, useState } from "react";
 
 export default function Navbar() {
+    const [token, setToken] = useState<string | null>(null);
+
+    useEffect(() => {
+        // Access localStorage only on the client side
+        setToken(localStorage.getItem("nnp-stream-token"));
+    }, []);
+
+    const navigationItems = useMemo(() => {
+        return [
+            { name: "Studio", href: `${process.env.NEXT_PUBLIC_ADMIN_URL}?t=${token || ''}`, target: "_blank", icon: <LiveIcon /> },
+            { name: "Favoris", href: "/favorites", icon: <Heart /> }
+        ]
+    }, [token])
 
     const { user, isAdmin } = useAuth()
     const pathname = usePathname()

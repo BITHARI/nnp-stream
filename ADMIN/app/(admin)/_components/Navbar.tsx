@@ -1,19 +1,16 @@
 'use client'
 
 import Link from "next/link";
-import { ThemeToggle } from "@/components/ui/themeToggle";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useAuth } from "@/providers/AuthProvider";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, AnimatedMenuIcon } from "@/components/ui/navigation-menu";
 import NnpLogo from "@/components/icons/NnpLogo";
 import NnpMinifiedLogo from "@/components/icons/NnpMinifiedLogo";
-import SearchBar from "@/components/search/SearchBar";
 import HeartIcon from "@/components/icons/HeartIcon";
 import { usePathname } from "next/navigation";
-import LiveIcon from "@/components/icons/LiveIcon";
 import { Heart, User2 } from "lucide-react";
-import UserDropdown from "@/app/(public)/_components/UserDropdown";
+import UserDropdown from "./UserDropdown";
 
 const navigationItems = [
     // { name: "Live", href: "/live", icon: <LiveIcon /> },

@@ -1,5 +1,4 @@
 import { Ban, Loader2 } from "lucide-react";
-import Link from "next/link";
 
 interface EmptyStateProps {
     title: string,

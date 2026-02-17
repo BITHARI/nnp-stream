@@ -15,7 +15,7 @@ import { showError } from "@/lib/utils";
 import { createVideo } from "@/services/video";
 import { z } from "zod";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { getCategories, getSeries } from "@/services/series";
+import { getCategories, getSeries } from "@/services/categories";
 import { useRouter } from "next/navigation";
 import slugify from "slugify";
 import Uploader from "@/components/file-uploader/Uploader";

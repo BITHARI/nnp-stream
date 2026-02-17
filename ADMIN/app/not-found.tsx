@@ -1,5 +1,5 @@
 import EmptyState from "@/components/general/EmptyState";
-import Navbar from "./(public)/_components/Navbar";
+import Navbar from "./(admin)/_components/Navbar";
 
 export default function NotFoundPage() {
     return (

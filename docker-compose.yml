@@ -20,7 +20,8 @@ services:
     networks:
       - nnp-stream-network
 
-  # ============== API BACKEND (2 instances pour load balancing) ==============
+  # ============== API BACKEND (2 instances pour load balancing)
+
   api-1:
     container_name: nnp-stream-api-1
     build:
@@ -31,6 +32,7 @@ services:
       - .env
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+      SERVER_PORT: ${SERVER_PORT}
       INSTANCE_ID: "api-1"
     volumes:
       - media_data:/app/media
@@ -59,6 +61,7 @@ services:
       - .env
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+      SERVER_PORT: ${SERVER_PORT}
       INSTANCE_ID: "api-2"
     volumes:
       - media_data:/app/media
@@ -77,79 +80,78 @@ services:
     networks:
       - nnp-stream-network
 
-  # ============== FRONTEND PUBLIC ==============
   front:
     container_name: nnp-stream-front
     build:
       context: ./FRONT
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+        NEXT_PUBLIC_BASE_URL: http://localhost
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      CLIENT_PORT: ${CLIENT_PORT}
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:${CLIENT_PORT} || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "wget --spider -q http://localhost:${CLIENT_PORT} || exit 1",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
     depends_on:
       api-1:
         condition: service_healthy
-      api-2:
-        condition: service_healthy
     networks:
       - nnp-stream-network
 
-  # ============== FRONTEND ADMIN ==============
   admin:
     container_name: nnp-stream-admin
     build:
       context: ./ADMIN
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+        NEXT_PUBLIC_BASE_URL: http://localhost
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      PORT: 3001
+    ports:
+      - "3001:3001"
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:${CLIENT_PORT} || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "wget --spider -q http://localhost:${ADMIN_PORT} || exit 1",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
     depends_on:
       api-1:
         condition: service_healthy
-      api-2:
-        condition: service_healthy
     networks:
       - nnp-stream-network
 
-  # ============== NGINX REVERSE PROXY + LOAD BALANCER ==============
   nginx:
     container_name: nnp-stream-nginx
     image: nginx:alpine
     restart: unless-stopped
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/logs:/var/log/nginx
     depends_on:
-      front:
-        condition: service_healthy
-      admin:
-        condition: service_healthy
       api-1:
         condition: service_healthy
       api-2:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD-SHELL", "wget --spider -q http://localhost/health || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
     networks:
       - nnp-stream-network
 
