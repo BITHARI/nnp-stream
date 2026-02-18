@@ -16,21 +16,20 @@ import { Heart, User2 } from "lucide-react";
 import { useMemo, useEffect, useState } from "react";
 
 export default function Navbar() {
+    const { user, isAdmin } = useAuth()
     const [token, setToken] = useState<string | null>(null);
 
     useEffect(() => {
-        // Access localStorage only on the client side
         setToken(localStorage.getItem("nnp-stream-token"));
     }, []);
 
     const navigationItems = useMemo(() => {
         return [
-            { name: "Studio", href: `${process.env.NEXT_PUBLIC_ADMIN_URL}?t=${token || ''}`, target: "_blank", icon: <LiveIcon /> },
-            { name: "Favoris", href: "/favorites", icon: <Heart /> }
+            { name: "Studio", href: `${process.env.NEXT_PUBLIC_ADMIN_URL}?t=${token || ''}`, target: "_blank", icon: <LiveIcon />, enabled: isAdmin },
+            { name: "Favoris", href: "/favorites", icon: <Heart />, enabled: !!user?.id },
         ]
     }, [token])
 
-    const { user, isAdmin } = useAuth()
     const pathname = usePathname()
 
     return <header className="fixed w-full top-0 z-50 bg-linear-to-b from-nnp-primary to-transparent pb-4">
@@ -46,26 +45,21 @@ export default function Navbar() {
             <SearchBar />
             <nav className="flex items-center gap-2">
                 <div className="hidden lg:flex items-center gap-2">
-                    {isAdmin && <Link
-                        href="/studio"
-                        data-active={pathname.startsWith("/live")}
-                        className="group flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 transition-all"
-                    >
-                        <LiveIcon className="stroke-nnp-muted group-data-[active=true]:stroke-nnp-highlight transition-all size-4" />
-                        <span className="text-nnp-muted group-data-[active=true]:text-nnp-highlight group-data-[active=true]:font-bold transition-all">
-                            {"Studio"}
-                        </span>
-                    </Link>}
-                    <Link
-                        href="/favorites"
-                        data-active={pathname.toLowerCase() === "/favorites"}
-                        className="group flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 transition-all"
-                    >
-                        <HeartIcon className="stroke-nnp-muted group-data-[active=true]:stroke-nnp-highlight transition-all size-4" />
-                        <span className="text-nnp-muted group-data-[active=true]:text-nnp-highlight group-data-[active=true]:font-bold transition-all">
-                            {"Favoris"}
-                        </span>
-                    </Link>
+                    {navigationItems.map((link, index) => {
+                        if (!link.enabled) return null;
+                        return <Link
+                            key={index}
+                            href={link.href}
+                            target={link.target}
+                            data-active={pathname.toLowerCase().startsWith(link.href.toLowerCase())}
+                            className="group flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 transition-all"
+                        >
+                            {link.icon}
+                            <span className="text-nnp-muted group-data-[active=true]:text-nnp-highlight group-data-[active=true]:font-bold transition-all">
+                                {link.name}
+                            </span>
+                        </Link>
+                    })}
                 </div>
                 <div className={`flex items-center space-x-4 ${!user && "max-md:hidden"}`}>
                     {user
@@ -89,6 +83,7 @@ export default function Navbar() {
                         <NavigationMenu className="max-w-none *:w-full">
                             <NavigationMenuList className="flex-col items-start gap-0 md:gap-2 space-y-1">
                                 {navigationItems.map((link, index) => {
+                                    if (!link.enabled) return null;
                                     return <NavigationMenuItem key={index} className="w-full">
                                         <NavigationMenuLink href={link.href} target={link.target} className="py-1.5">
                                             <div className="flex items-center justify-between gap-2">

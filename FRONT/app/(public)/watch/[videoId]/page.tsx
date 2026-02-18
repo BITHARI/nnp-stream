@@ -49,7 +49,7 @@ export default function WatchPage() {
     const { data: isFavorited } = useQuery({
         queryKey: ["check-favorite", currentVideo?.id],
         queryFn: () => checkFavorite(currentVideo?.id as string),
-        enabled: !!currentVideo?.id
+        enabled: !!currentVideo?.id && !!user?.id,
     })
     const [likeCount, setLikeCount] = useState(currentVideo?.likes || 0);
     const [isLiked, setIsLiked] = useState(false);
