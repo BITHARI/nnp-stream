@@ -51,7 +51,7 @@ export async function getVideos(req: Request, res: Response, next: NextFunction)
     try {
         const {
             page = "1",
-            limit = "20",
+            limit = "10",
             category,
             type,
             seriesId,

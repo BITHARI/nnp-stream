@@ -1,0 +1,474 @@
+{
+    "users": [
+        {
+            "email": "alice@example.com",
+            "password": "Password1!",
+            "name": "Alice Martin",
+            "userRole": "SUPERADMIN",
+            "emailVerified": true
+        },
+        {
+            "email": "bob@example.com",
+            "password": "Password1!",
+            "name": "Bob Dupont",
+            "userRole": "ADMIN",
+            "emailVerified": true
+        },
+        {
+            "email": "carol@example.com",
+            "password": "Password1!",
+            "name": "Carol Lefevre",
+            "userRole": "VIEWER",
+            "emailVerified": true
+        },
+        {
+            "email": "david@example.com",
+            "password": "Password1!",
+            "name": "David Roux",
+            "userRole": "VIEWER",
+            "emailVerified": false
+        },
+        {
+            "email": "emma@example.com",
+            "password": "Password1!",
+            "name": "Emma Bernard",
+            "userRole": "VIEWER",
+            "emailVerified": true
+        }
+    ],
+    "categories": [
+        {
+            "type": "Action"
+        },
+        {
+            "type": "Comédie"
+        },
+        {
+            "type": "Drame"
+        },
+        {
+            "type": "Science-Fiction"
+        },
+        {
+            "type": "Documentaire"
+        },
+        {
+            "type": "Thriller"
+        },
+        {
+            "type": "Animation"
+        }
+    ],
+    "videos": [
+        {
+            "title": "L'Odyssée des étoiles",
+            "description": "Un vaisseau spatial perd contact avec la Terre après avoir traversé un champ de débris cosmiques. L'équipage doit survivre dans l'inconnu.",
+            "cover_url": "https://picsum.photos/seed/v1/800/450",
+            "duration": "1:52:34",
+            "type": "FILM",
+            "slug": "odyssee-des-etoiles",
+            "is_promoted": true,
+            "categoryType": "Science-Fiction"
+        },
+        {
+            "title": "Rires en cascade",
+            "description": "Une famille dysfonctionnelle se retrouve coincée ensemble pendant les vacances. Les quiproquos s'enchaînent dans cette comédie hilarante.",
+            "cover_url": "https://picsum.photos/seed/v2/800/450",
+            "duration": "1:38:10",
+            "type": "FILM",
+            "slug": "rires-en-cascade",
+            "is_promoted": false,
+            "categoryType": "Comédie"
+        },
+        {
+            "title": "Les Ombres de Paris",
+            "description": "Un détective solitaire enquête sur une série de disparitions mystérieuses dans les ruelles obscures de la capitale française.",
+            "cover_url": "https://picsum.photos/seed/v3/800/450",
+            "duration": "2:05:47",
+            "type": "FILM",
+            "slug": "ombres-de-paris",
+            "is_promoted": true,
+            "categoryType": "Thriller"
+        },
+        {
+            "title": "Plein Gaz",
+            "description": "Des pilotes amateurs s'affrontent dans une course clandestine à travers l'Europe. La vitesse, l'adrénaline et les trahisons sont au rendez-vous.",
+            "cover_url": "https://picsum.photos/seed/v4/800/450",
+            "duration": "1:44:22",
+            "type": "FILM",
+            "slug": "plein-gaz",
+            "is_promoted": false,
+            "categoryType": "Action"
+        },
+        {
+            "title": "La Dernière Frontière",
+            "description": "Dans un futur dystopique, une résistante tente de renverser un régime autoritaire qui contrôle chaque aspect de la vie humaine.",
+            "cover_url": "https://picsum.photos/seed/v5/800/450",
+            "duration": "2:12:05",
+            "type": "FILM",
+            "slug": "derniere-frontiere",
+            "is_promoted": true,
+            "categoryType": "Science-Fiction"
+        },
+        {
+            "title": "Coeurs Brisés",
+            "description": "Deux anciens amants se retrouvent des années après leur séparation. Entre regrets et espoir, ils doivent choisir leur avenir.",
+            "cover_url": "https://picsum.photos/seed/v6/800/450",
+            "duration": "1:55:18",
+            "type": "FILM",
+            "slug": "coeurs-brises",
+            "is_promoted": false,
+            "categoryType": "Drame"
+        },
+        {
+            "title": "Le Monde des Fourmis",
+            "description": "Un documentaire fascinant plongeant dans la vie secrète des colonies de fourmis, révélant une organisation sociale d'une complexité étonnante.",
+            "cover_url": "https://picsum.photos/seed/v7/800/450",
+            "duration": "0:52:40",
+            "type": "DOCUMENTAIRE",
+            "slug": "monde-des-fourmis",
+            "is_promoted": false,
+            "categoryType": "Documentaire"
+        },
+        {
+            "title": "Pixel Heroes",
+            "description": "Dans un monde entièrement animé, un jeune héros doit sauver sa ville d'un virus numérique qui dévore tout sur son passage.",
+            "cover_url": "https://picsum.photos/seed/v8/800/450",
+            "duration": "1:28:55",
+            "type": "FILM",
+            "slug": "pixel-heroes",
+            "is_promoted": true,
+            "categoryType": "Animation"
+        },
+        {
+            "title": "Opération Fantôme",
+            "description": "Un agent secret infiltre une organisation criminelle internationale pour déjouer un attentat d'envergure mondiale.",
+            "cover_url": "https://picsum.photos/seed/v9/800/450",
+            "duration": "2:00:33",
+            "type": "FILM",
+            "slug": "operation-fantome",
+            "is_promoted": false,
+            "categoryType": "Action"
+        },
+        {
+            "title": "Le Rire du Lundi",
+            "description": "Un humoriste raté tente de relancer sa carrière en participant à un concours national de stand-up comedy. Le chaos s'ensuit.",
+            "cover_url": "https://picsum.photos/seed/v10/800/450",
+            "duration": "1:33:27",
+            "type": "FILM",
+            "slug": "rire-du-lundi",
+            "is_promoted": false,
+            "categoryType": "Comédie"
+        },
+        {
+            "title": "Abysses",
+            "description": "Une équipe de scientifiques explore les profondeurs inconnues de l'océan et découvre des créatures que personne n'aurait pu imaginer.",
+            "cover_url": "https://picsum.photos/seed/v11/800/450",
+            "duration": "1:49:14",
+            "type": "FILM",
+            "slug": "abysses",
+            "is_promoted": true,
+            "categoryType": "Science-Fiction"
+        },
+        {
+            "title": "La Promesse du Père",
+            "description": "Un père absent cherche à renouer avec son fils après des années de silence. Un drame touchant sur la famille et le pardon.",
+            "cover_url": "https://picsum.photos/seed/v12/800/450",
+            "duration": "1:58:02",
+            "type": "FILM",
+            "slug": "promesse-du-pere",
+            "is_promoted": false,
+            "categoryType": "Drame"
+        },
+        {
+            "title": "Coup de Théâtre",
+            "description": "Une troupe de théâtre amateure découvre que leur prochain spectacle est en réalité une arnaque montée par leur metteur en scène.",
+            "cover_url": "https://picsum.photos/seed/v13/800/450",
+            "duration": "1:41:58",
+            "type": "FILM",
+            "slug": "coup-de-theatre",
+            "is_promoted": false,
+            "categoryType": "Comédie"
+        },
+        {
+            "title": "La Cité des Ombres",
+            "description": "Dans une mégapole futuriste corrompue, un journaliste met au jour un complot qui menace toute la population.",
+            "cover_url": "https://picsum.photos/seed/v14/800/450",
+            "duration": "2:08:19",
+            "type": "FILM",
+            "slug": "cite-des-ombres",
+            "is_promoted": true,
+            "categoryType": "Thriller"
+        },
+        {
+            "title": "Forêts Primaires",
+            "description": "Partez à la découverte des dernières forêts vierges de la planète, refuges de biodiversité menacés par la déforestation.",
+            "cover_url": "https://picsum.photos/seed/v15/800/450",
+            "duration": "1:04:30",
+            "type": "DOCUMENTAIRE",
+            "slug": "forets-primaires",
+            "is_promoted": false,
+            "categoryType": "Documentaire"
+        },
+        {
+            "title": "Turbo Squad",
+            "description": "Une équipe de super-héros animés affronte une menace venue d'une autre dimension pour protéger leur planète.",
+            "cover_url": "https://picsum.photos/seed/v16/800/450",
+            "duration": "1:32:44",
+            "type": "FILM",
+            "slug": "turbo-squad",
+            "is_promoted": false,
+            "categoryType": "Animation"
+        },
+        {
+            "title": "La Traque",
+            "description": "Un tueur en série laisse des indices cryptés derrière lui. Une profileuse obsessionnelle décide de jouer son propre jeu.",
+            "cover_url": "https://picsum.photos/seed/v17/800/450",
+            "duration": "1:57:11",
+            "type": "FILM",
+            "slug": "la-traque",
+            "is_promoted": true,
+            "categoryType": "Thriller"
+        },
+        {
+            "title": "Tempête de Rires",
+            "description": "Bloqués dans un chalet par une tempête de neige, six inconnus aux personnalités opposées doivent cohabiter pendant 48 heures.",
+            "cover_url": "https://picsum.photos/seed/v18/800/450",
+            "duration": "1:36:50",
+            "type": "FILM",
+            "slug": "tempete-de-rires",
+            "is_promoted": false,
+            "categoryType": "Comédie"
+        },
+        {
+            "title": "Mars 2157",
+            "description": "Les premiers colons sur Mars font face à une mutinerie interne alors qu'une tempête de poussière géante menace leur survie.",
+            "cover_url": "https://picsum.photos/seed/v19/800/450",
+            "duration": "2:15:03",
+            "type": "FILM",
+            "slug": "mars-2157",
+            "is_promoted": true,
+            "categoryType": "Science-Fiction"
+        },
+        {
+            "title": "Les Bâtisseurs de Cathédrales",
+            "description": "Un documentaire sur les techniques et les hommes qui ont érigé les grandes cathédrales gothiques au Moyen Âge.",
+            "cover_url": "https://picsum.photos/seed/v20/800/450",
+            "duration": "0:58:15",
+            "type": "DOCUMENTAIRE",
+            "slug": "batisseurs-de-cathedrales",
+            "is_promoted": false,
+            "categoryType": "Documentaire"
+        },
+        {
+            "title": "Instinct de Survie",
+            "description": "Après un crash d'avion dans la jungle amazonienne, les survivants doivent s'organiser pour retrouver la civilisation.",
+            "cover_url": "https://picsum.photos/seed/v21/800/450",
+            "duration": "1:50:28",
+            "type": "FILM",
+            "slug": "instinct-de-survie",
+            "is_promoted": false,
+            "categoryType": "Action"
+        },
+        {
+            "title": "Le Testament du Roi",
+            "description": "Un jeune avocat découvre un testament secret qui pourrait bouleverser l'histoire d'une des plus grandes fortunes d'Europe.",
+            "cover_url": "https://picsum.photos/seed/v22/800/450",
+            "duration": "2:03:41",
+            "type": "FILM",
+            "slug": "testament-du-roi",
+            "is_promoted": false,
+            "categoryType": "Thriller"
+        },
+        {
+            "title": "Voyage au bout des larmes",
+            "description": "Inspiré d'une histoire vraie, ce film retrace le parcours d'une réfugiée qui traverse l'Europe pour rejoindre sa famille.",
+            "cover_url": "https://picsum.photos/seed/v23/800/450",
+            "duration": "1:46:09",
+            "type": "FILM",
+            "slug": "voyage-au-bout-des-larmes",
+            "is_promoted": true,
+            "categoryType": "Drame"
+        },
+        {
+            "title": "Dragon Island",
+            "description": "Une petite fille et son dragon apprivoisé partent à l'aventure pour retrouver l'île des origines et sauver les derniers dragons.",
+            "cover_url": "https://picsum.photos/seed/v24/800/450",
+            "duration": "1:25:00",
+            "type": "FILM",
+            "slug": "dragon-island",
+            "is_promoted": false,
+            "categoryType": "Animation"
+        },
+        {
+            "title": "Code Rouge",
+            "description": "Un hacker éthique est recruté de force par un gouvernement pour neutraliser une cyberattaque qui paralyse les infrastructures nationales.",
+            "cover_url": "https://picsum.photos/seed/v25/800/450",
+            "duration": "1:54:36",
+            "type": "FILM",
+            "slug": "code-rouge",
+            "is_promoted": true,
+            "categoryType": "Action"
+        },
+        {
+            "title": "L'Amour en Chantier",
+            "description": "Un architecte et une décoratrice d'intérieur aux visions opposées tombent amoureux pendant la rénovation d'un hôtel particulier.",
+            "cover_url": "https://picsum.photos/seed/v26/800/450",
+            "duration": "1:39:53",
+            "type": "FILM",
+            "slug": "amour-en-chantier",
+            "is_promoted": false,
+            "categoryType": "Comédie"
+        },
+        {
+            "title": "Requiem pour un Champion",
+            "description": "Le portrait poignant d'un ancien boxeur champion du monde qui tente de reconstruire sa vie après une tragédie personnelle.",
+            "cover_url": "https://picsum.photos/seed/v27/800/450",
+            "duration": "2:01:17",
+            "type": "FILM",
+            "slug": "requiem-pour-un-champion",
+            "is_promoted": false,
+            "categoryType": "Drame"
+        },
+        {
+            "title": "Icebound",
+            "description": "Un brise-glace et son équipage sont pris au piège dans la banquise arctique. Thriller haletant entre froid extrême et tensions humaines.",
+            "cover_url": "https://picsum.photos/seed/v28/800/450",
+            "duration": "1:48:22",
+            "type": "FILM",
+            "slug": "icebound",
+            "is_promoted": true,
+            "categoryType": "Action"
+        }
+    ],
+    "comments": [
+        {
+            "videoSlug": "odyssee-des-etoiles",
+            "userEmail": "carol@example.com",
+            "content": "Un film absolument époustouflant, les effets visuels sont incroyables !"
+        },
+        {
+            "videoSlug": "odyssee-des-etoiles",
+            "userEmail": "david@example.com",
+            "content": "Scénario un peu faible mais visuellement c'est magnifique."
+        },
+        {
+            "videoSlug": "ombres-de-paris",
+            "userEmail": "emma@example.com",
+            "content": "Le dénouement m'a complètement surpris, bravo !"
+        },
+        {
+            "videoSlug": "ombres-de-paris",
+            "userEmail": "carol@example.com",
+            "content": "Ambiance très réussie, j'ai adoré l'atmosphère parisienne."
+        },
+        {
+            "videoSlug": "derniere-frontiere",
+            "userEmail": "bob@example.com",
+            "content": "Un peu long mais vraiment bien construit."
+        },
+        {
+            "videoSlug": "pixel-heroes",
+            "userEmail": "emma@example.com",
+            "content": "Parfait pour toute la famille, mes enfants ont adoré !"
+        },
+        {
+            "videoSlug": "la-traque",
+            "userEmail": "david@example.com",
+            "content": "Stressant à souhait, j'ai pas pu décrocher de l'écran."
+        },
+        {
+            "videoSlug": "mars-2157",
+            "userEmail": "carol@example.com",
+            "content": "La meilleure SF que j'ai vue depuis des années."
+        },
+        {
+            "videoSlug": "voyage-au-bout-des-larmes",
+            "userEmail": "emma@example.com",
+            "content": "Bouleversant. Un film qui laisse des traces."
+        },
+        {
+            "videoSlug": "code-rouge",
+            "userEmail": "bob@example.com",
+            "content": "Techniquement assez réaliste pour un film grand public. Bon divertissement."
+        }
+    ],
+    "notes": [
+        {
+            "videoSlug": "odyssee-des-etoiles",
+            "userEmail": "carol@example.com",
+            "type": "LIKE"
+        },
+        {
+            "videoSlug": "odyssee-des-etoiles",
+            "userEmail": "emma@example.com",
+            "type": "LIKE"
+        },
+        {
+            "videoSlug": "ombres-de-paris",
+            "userEmail": "david@example.com",
+            "type": "LIKE"
+        },
+        {
+            "videoSlug": "derniere-frontiere",
+            "userEmail": "carol@example.com",
+            "type": "LIKE"
+        },
+        {
+            "videoSlug": "pixel-heroes",
+            "userEmail": "emma@example.com",
+            "type": "LIKE"
+        },
+        {
+            "videoSlug": "rires-en-cascade",
+            "userEmail": "bob@example.com",
+            "type": "DISLIKE"
+        },
+        {
+            "videoSlug": "la-traque",
+            "userEmail": "david@example.com",
+            "type": "LIKE"
+        },
+        {
+            "videoSlug": "mars-2157",
+            "userEmail": "carol@example.com",
+            "type": "LIKE"
+        },
+        {
+            "videoSlug": "voyage-au-bout-des-larmes",
+            "userEmail": "emma@example.com",
+            "type": "LIKE"
+        },
+        {
+            "videoSlug": "code-rouge",
+            "userEmail": "bob@example.com",
+            "type": "LIKE"
+        }
+    ],
+    "favorites": [
+        {
+            "videoSlug": "odyssee-des-etoiles",
+            "userEmail": "carol@example.com"
+        },
+        {
+            "videoSlug": "la-traque",
+            "userEmail": "david@example.com"
+        },
+        {
+            "videoSlug": "mars-2157",
+            "userEmail": "emma@example.com"
+        },
+        {
+            "videoSlug": "pixel-heroes",
+            "userEmail": "emma@example.com"
+        },
+        {
+            "videoSlug": "code-rouge",
+            "userEmail": "bob@example.com"
+        },
+        {
+            "videoSlug": "voyage-au-bout-des-larmes",
+            "userEmail": "carol@example.com"
+        }
+    ]
+}

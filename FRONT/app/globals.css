@@ -17,7 +17,7 @@
 }
 
 .mobile-scroll-container {
-    @apply flex overflow-x-auto gap-[10px] max-md:gap-[8px] scrollbar-hide pb-1 lg:pb-4 px-4 -mx-4 max-md:px-3 max-md:-mx-3;
+    @apply flex overflow-x-auto gap-2.5 max-md:gap-2 scrollbar-hide pb-1 lg:pb-4 px-4 -mx-4 max-md:px-3 max-md:-mx-3;
 }
 
 .home mux-player {

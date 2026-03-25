@@ -33,11 +33,14 @@ RUN npm ci --omit=dev
 
 # Copy Prisma schema and generated client
 COPY --from=build /app/prisma ./prisma
-# COPY --from=build /app/prisma.config.ts ./prisma.config.ts
 COPY --from=build /app/src/generated ./src/generated
 
 # Copy compiled output
 COPY --from=build /app/dist ./dist
+
+# Copy seed files (JSON data + compiled seed script)
+COPY --from=build /app/dist/scripts/seed.js ./dist/scripts/seed.js
+COPY src/scripts/data.json ./dist/scripts/data.json
 
 # Create media directory
 RUN mkdir -p /app/media
@@ -49,4 +52,4 @@ USER appuser
 
 EXPOSE ${SERVER_PORT}
 
-CMD ["sh", "-c", "npx prisma db push && node dist/index.js"]
+CMD ["sh", "-c", "npx prisma db push && node dist/scripts/seed.js && node dist/index.js"]

@@ -33,7 +33,7 @@ export default function ForgotPasswordPage() {
 
     const onSubmit = async (data: forgotPasswordSchemaType) => {
         try {
-            localStorage.setItem('picha-kubwa-user-email', data.email)
+            localStorage.setItem('nnp-stream-user-email', data.email)
             await mutateAsync(data)
             toast.success("Email de réinitialisation envoyé", { duration: 10000 })
         } catch (error: any) {
